@@ -1,2 +1,31 @@
 ---
 - name : install_a_program
+  hosts: targets
+  become: true
+  remote_user: root
+  gather_facts : true
+
+  tasks: 
+    - name: install g++
+      apt : name=g++ state=present
+
+    - name: install make
+      apt: name=make state=present
+
+    - name: install lib curses.h
+      apt: name=libncurses5-dev state=present
+
+    - name: clone tetris repo
+      ansible.builtin.git:
+        repo: https://github.com/taylorconor/tinytetris.git
+        dest: /home/vagrant/tetris
+
+    - replace:
+        path: /home/vagrant/tetris/Makefile
+        regexp: 'LDFLAGS'
+        replace: 'LDLIBS'
+
+    - name: build tetris
+      community.general.make:
+        chdir: /home/vagrant/tetris
+        target: all

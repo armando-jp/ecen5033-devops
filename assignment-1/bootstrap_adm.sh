@@ -5,18 +5,7 @@ MACHINEX_USER='vagrant'
 MACHINEX_PASS='vagrant'
 SSH_KEY_PATH='/home/vagrant/.ssh/id_cli'
 
-# ANSIBLE_HOST_PATH='/etc/ansible/hosts'
-read -r -d '' ANSIBLE_HOST_INFO << EOM
-[targets]
-192.168.35.21
-
-[all:vars]
-ansible_user=vagrant
-ansible_ssh_pass=vagrant
-
-ansible_ssh_host=192.168.35.21
-ansible_ssh_private_key_file=/home/vagrant/.ssh
-EOM
+PLAYBOOK_NAME='hw1.yml'
 
 # do update
 echo "Running apt-get update"
@@ -34,9 +23,11 @@ ssh-keygen -t rsa -N "" -f $SSH_KEY_PATH
 # copy the ssh id to machineX
 sshpass -p $MACHINEX_PASS ssh-copy-id -o StrictHostKeyChecking=no -i $SSH_KEY_PATH $MACHINEX_USER@$MACHINEX_IP
 
-# # add lines to ansible host file
-# sudo chmod 666 /etc/ansible/hosts
-# echo "$ANSIBLE_HOST_INFO" >> $ANSIBLE_HOST_PATH
+# copy the hosts file to the /home/vagrant directory
+cp /vagrant/hosts /home/vagrant
 
-# create hosts file in home directory
-echo "$ANSIBLE_HOST_INFO" >> /home/vagrant/hosts
+# copy the playbook to the /home/vagrant directory
+cp /vagrant/$PLAYBOOK_NAME /home/vagrant
+
+# run the ansible playbook 
+ansible-playbook -i hosts $PLAYBOOK_NAME
