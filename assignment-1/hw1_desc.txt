@@ -1,0 +1,64 @@
+Homework 1 assignment:
+
+Part 1:
+Create a vagrant file to 
+1) create two virtual machines, 
+2) On one of them, install ansible, 
+3) on one of them create an ssh key pair and install it on the other 
+  (using Option 2 - copying over via ssh, rather than via the filesystem).     
+
+Part 2:
+Create an ansible playbook which builds some application from source 
+-- that is, from a base VM image (e.g., ubunty/trusty64), 
+you run 1 ansible playbook to get any packages, 
+get the source, etc. to build the application.  
+
+Part 3:
+Include a README that describes how to run your project, 
+even if it's one line (this is to get in a good practice).
+
+I'm looking for 1 Vagrantfile, 1 hw1.yml, and 1 README 
+
+
+
+Quick start guide from class.
+
+
+-- search for how to create a Vagrantfile with two multiple VMs.  
+  (say adm for the admin node, and machineX for the server to install the application on).
+
+-- search for how to install ansible and add that to the provision part of the 
+  Vagrantfile for the one VM.  
+  (note - the instructions on 
+  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+  won't get the latest version on some distros, so use this line instead of the
+  equivalent line in that guide if using ubuntu, or look it up if on some other
+  distro and you notice the version is not a recent one)
+  sudo add-apt-repository ppa:ansible/ansible-2.10
+
+
+-- set up ssh keys (on adm):
+
+ ssh-keygen
+
+ ssh-copy-id vagrant@192.168.33.11
+
+    (password is vagrant)
+
+-- create a hosts file with contents of 192.168.33.11 in it.
+
+-- test out ansible's communication to the other server:
+
+  ansible -i hosts -m ping
+
+
+Any problems, jump on slack -- it's ok to ask classmates for pointers.
+Please don't just post full code.
+
+Requirement - a peer must validate your homework 
+(that is, they must run it on their machine and make sure it works).  
+
+Due Thursday Sept 9.  Private message me on slack a zip with your solution.  
+Peer - private message me that you validated the solution for <include their name>.  
+
+We'll walk through some of them in class.
