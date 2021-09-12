@@ -6,7 +6,7 @@ import os
 import random
 import json
 
-HOST = '127.0.0.1'
+HOST = 'vagrant_server_1'
 PORT = 6060
 
 OPS = ['+', '-', '*', '/']
@@ -25,11 +25,15 @@ def generate_request():
     return json.dumps(req).encode('utf-8')
 
 while True:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
-        s.sendall(generate_request())
-        resp = s.recv(1024)
-        resp = json.loads(resp.decode('utf-8'))
-        print(resp)
+    try: 
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.sendall(generate_request())
+            resp = s.recv(1024)
+            resp = json.loads(resp.decode('utf-8'))
+            print(resp)
+    except socket.error:
+        print("Connection Failed, Retrying...")
+        time.sleep(1)
     time.sleep(5)
 
