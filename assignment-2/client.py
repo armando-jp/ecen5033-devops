@@ -24,11 +24,12 @@ def generate_request():
     }
     return json.dumps(req).encode('utf-8')
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(generate_request())
-    resp = s.recv(1024)
-    resp = json.loads(resp.decode('utf-8'))
-    print(resp)
+while True:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, PORT))
+        s.sendall(generate_request())
+        resp = s.recv(1024)
+        resp = json.loads(resp.decode('utf-8'))
+        print(resp)
+    time.sleep(5)
 
-print('Response: ' + resp)
