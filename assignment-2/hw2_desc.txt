@@ -1,0 +1,28 @@
+Homework 2 Assignment (Due Mon Sept 20 evening):
+
+Part 1:
+Create a client and server application (any language).  
+Client - periodically makes a GET request to the server.
+  - Period and IP address of server to be set via Environment variables 
+  (in part 2, this can be set via the Dockerfile, --env in the docker run
+  command, 
+  or in the docker-compose yaml)
+Server - responds with a message
+  - Message to be set via Environment variable 
+  (in part 2, this can be set via the dockerfile, --env in the docker run
+  command, or in the docker-compose yaml)
+
+Part 2:
+Create Dockerfile's for each of the client and server.
+Create a docker-compose file that describes both containers - 
+for this assignment, client and server can run on the same server.
+
+Part 3:
+Include a README.
+
+Requirement - must be validated by a peer.  
+Peer - send me a slack message that you've run and validated their project.
+To hand in - send zip/tarball via direct message over slack.
+
+
+
