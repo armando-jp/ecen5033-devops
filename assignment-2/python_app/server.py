@@ -5,8 +5,10 @@ import sys
 import json
 import operator
 
-HOST = '127.0.0.1'
-PORT = 6060
+HOST = os.environ['SERVER_HOSTNAME']
+PORT = int(os.environ['SERVER_PORT'])
+print(f'ENV VARS: SERVER_HOSTNAME:{HOST} SERVER_PORT:{PORT}')
+
 
 # Operator lookup table
 ops = { 
@@ -32,6 +34,7 @@ def process_request(req: json) -> bytearray:
 
 while True:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((HOST, PORT))
         s.listen()
         conn, addr = s.accept() # this call is blocking 
@@ -41,10 +44,10 @@ while True:
             # Get request
             request = conn.recv(1024)
             request = json.loads(request.decode('utf-8'))
+            print(f"Received from client: {request}")
 
             # Process request
             resp = process_request(request)
-            print(resp)
 
             # Send request
             conn.sendall(resp)

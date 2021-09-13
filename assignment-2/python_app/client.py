@@ -6,8 +6,9 @@ import os
 import random
 import json
 
-HOST = 'vagrant_server_1'
-PORT = 6060
+HOST = os.environ['SERVER_HOSTNAME']
+PORT = int(os.environ['SERVER_PORT'])
+print(f'ENV VARS: SERVER_HOSTNAME:{HOST} SERVER_PORT:{PORT}')
 
 OPS = ['+', '-', '*', '/']
 
@@ -28,12 +29,13 @@ while True:
     try: 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((HOST, PORT))
+            print(f"Connected to {HOST} on port {PORT}")
             s.sendall(generate_request())
             resp = s.recv(1024)
             resp = json.loads(resp.decode('utf-8'))
-            print(resp)
+            print(f"Server response: {resp}")
+            time.sleep(5)
     except socket.error:
-        print("Connection Failed, Retrying...")
+        print(f"Connection to {HOST} on port {PORT} FAILED, Retrying...")
         time.sleep(1)
-    time.sleep(5)
 

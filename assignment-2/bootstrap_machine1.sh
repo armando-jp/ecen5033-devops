@@ -27,9 +27,10 @@ yes | sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/d
 sudo chmod +x /usr/local/bin/docker-compose
 
 # start docker service
+echo "Starting docker daemon"
 sudo service docker start
 
 # run docker compose
 echo "Running docker compose"
 cd /vagrant/
-docker-compose up
+sudo docker-compose up

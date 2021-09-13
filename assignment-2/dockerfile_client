@@ -2,8 +2,7 @@ FROM python:3-alpine3.10
 WORKDIR /usr/src/app
 COPY python_app/client.py /usr/src/app/
 
-ENV SERVER_APP=server.py
-ENV SERVER_HOSTNAME=vagrant_server_1
+ENV SERVER_HOSTNAME=python_server
 ENV SERVER_PORT=6060
 
 CMD ["python", "-u", "./client.py"]
