@@ -7,7 +7,7 @@ Creates two VMs using Vagrant called *adm* and *machneX*. During provisioning, A
 
 #### Steps to run
 1. `git clone` this repo
-2. `cd ecen5573-devops/assignemnt-1`
+2. `cd ecen5573-devops/assignment-1`
 3. `vagrant up`
 4. `vagrant ssh machineX`
 5. `cd tetris/`
