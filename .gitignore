@@ -16,4 +16,4 @@
 
 .DS_Store
 
-server.cpython*
+__pycache__
