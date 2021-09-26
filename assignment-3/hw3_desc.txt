@@ -10,13 +10,15 @@ Hand in:
 * README - include very specific instructions (exact command to build, run scripts, etc.)
 * Server app code with Dockerfile
 * Startup script or playbook - starts registrator, etcd, nginx
-* upgrade script or playbook - runs the container, upgrading from a previous version in an automated manner.  Needs to handle: 1) No color -> Blue (i.e., first run), 2) Blue -> Green, 3) Green -> Blue.  
+* upgrade script or playbook - runs the container, upgrading from a previous version in an automated manner.  
+    Needs to handle: 1) No color -> Blue (i.e., first run), 2) Blue -> Green, 3) Green -> Blue.  
 * Any other files needed (toml and template files, etc.)
 
 DUE: Monday Oct 4 Evening (2 weeks)
 
 Note:
-* Simplifying assumptions are fine, within reason.  e.g., the upgrade script only works for a specific service (and isn't general to any service) - that's fine.
+* Simplifying assumptions are fine, within reason.  e.g., the upgrade script 
+    only works for a specific service (and isn't general to any service) - that's fine.
 * All IP addresses/ports should be selected automatically by Docker.
 
 Peer validation:

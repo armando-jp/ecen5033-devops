@@ -20,4 +20,13 @@ Creates a single VM named "machine1", using Vagrant. During provisioning, Docker
 1. `git clone` this repo
 2. `cd ecen5573-devops/assignemnt-2`
 3. `vagrant up`
+---
+### assignemnt-3
 
+#### Steps to run
+1. `git clone` this repo
+2. `cd ecen5573-devops/assignemnt-3`
+3. `vagrant up`
+4. `vagrant ssh`
+5. `docker-compose up` (at this point the python flask server is running and can
+   be accessed by the host. Run `curl localhost:8080` to verify)
