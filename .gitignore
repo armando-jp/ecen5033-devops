@@ -12,6 +12,8 @@
 ### Vagrant Patch ###
 *.box
 
+/machine*_data
+
 # End of https://www.toptal.com/developers/gitignore/api/vagrant
 
 .DS_Store
