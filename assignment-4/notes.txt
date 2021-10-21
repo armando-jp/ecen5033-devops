@@ -1,0 +1,15 @@
+[run a local registry, on all machines]
+1. run `sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2`
+2. edit /etc/docker/daemon.json, adding this inside the { } (you’ll need a comma on the current last entry)
+"insecure-registries":["192.168.33.10:5000"]
+3. run `sudo service docker restart`
+
+[on machine1]
+1. copy nodejs from assingment-4 directory to machine1_data [added to
+part2_master.sh]
+2. cd to nodejs/njsapp/healthy/
+3. run build_njsapp.sh 
+4. cd /vagrant_data/nodejs/
+5. run `kubectl apply -f njsapp-rc.yml`
+6. run `kubectl get pods -o wide --show-labels` to see pods
+7. to stop run `kubectl delete replicationcontroller/njsapp-rc`

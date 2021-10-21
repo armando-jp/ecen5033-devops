@@ -18,4 +18,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # Deploy a pod network 
 sudo kubectl apply -f kube-flannel.yml
 
+# Copy nodejs directory to machine1_data
+cp -r nodejs/ machine1_data/
+
 
