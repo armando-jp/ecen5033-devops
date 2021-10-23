@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: njsapp-dep1
+  labels:
+    app: njs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: njs
+  template:
+    metadata:
+      labels:
+        app: njs
+    spec:
+      containers:
+        - name: njsapp
+          image: 192.168.33.10:5000/njsapp
+          ports:
+            - containerPort: 8080
+
+

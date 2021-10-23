@@ -5,15 +5,16 @@ metadata:
 spec:
   replicas: 3
   selector:
-    app: njsapp
+    app: njs
   template:
     metadata:
       labels:
-        app: njsapp
+        app: njs
     spec:
       containers:
       - name: njsapp
         image: 192.168.33.10:5000/njsapp
         ports:
         - containerPort: 8080
-
+      nodeSelector:
+        machine: machine2
