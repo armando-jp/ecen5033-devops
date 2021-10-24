@@ -6,7 +6,7 @@ metadata:
      app: python_client
 spec:
   containers:
-  - image: 192.168.33.10:5000/py_client
+  - image: 192.168.33.10:5000/py-client
     name: py-client
     ports:
     - containerPort: 8080

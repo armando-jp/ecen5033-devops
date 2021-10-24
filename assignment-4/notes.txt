@@ -1,9 +1,7 @@
+=== INITIALIZATION ===
 [initialize vagrant machines, run commands from assignment-4 directory]
 1. follow steps outlined in k8s_installation_instructions.txt
-2. cp -r ./nodejs ./machine2_data
-3. cp -r ./python_client ./machine3_data
-4. cp -r ./python_client ./machine1_data
-5. cp -r ./nodejs ./machine1_data
+2. ./copy_files.sh
 
 [set up local registry on all 3 machines]
 ***MACHINE1***
@@ -27,78 +25,75 @@
 "insecure-registries":["192.168.33.12:5000"]
 4. sudo service docker restart
 
+=== PART 1 ===
 [assign labels to nodes]
 1. vagrant ssh machine1
-2. kubectl label node machine1 machine=machine1
-2. kubectl label node machine2 machine=machine2
-3. kubectl label node machine3 machine=machine3 
+2. kubectl label node machine1 machine=machine1 --overwrite
+2. kubectl label node machine2 machine=machine2 --overwrite
+3. kubectl label node machine3 machine=machine3 --overwrite
 
 [build the nodejs image on machine2]
-***MACHINE2***
 1. vagrant ssh machine2
-2. cd /vagrant_data/nodejs/njsapp/healthy/
-3. docker build -t njsapp .
-4. docker tag njsapp 192.168.33.10:5000/njsapp
-5. sudo docker push 192.168.33.10:5000/njsapp
+2. cd /vagrant_data/nodejs/njsapp/
+3. ./build_njsapp.sh
 
 [build the python_client image on machine3]
 1. vagrant ssh machine3
 2. cd /vagrant_data/python_client
-3. sudo docker build -t py-client .
-4. sudo docker tag py-client 192.168.33.10:5000/py-client
-5. sudo docker push 192.168.33.10:5000/py-client
+3. ./build_client.sh
 
 [run njsapp replication controller]
 1. vagrant ssh machine1
 2. cd /vagrant_data/nodejs/
-3. kubectl apply -f njsapp-rc.yml
-5. kubectl get rc
-6. kubectl get pods -o wide --show-labels
-7. kubectl delete replicationcontroller/njsapp-rc
+3. kubectl apply -f armando_njsapp-rc.yml
 
 [run njsapp service]
 1. vagrant ssh machine1
 2. cd /vagrant_data/nodejs/
-3. kubectl apply -f njsapp_svc.yml
-4. kubectl get service
-5. kubectl delete service njsapp-svc
+3. kubectl apply -f armando_njsapp_svc.yml
 
 [run py_client]
 1. vagrant ssh machine1
 2. cd /vagrant_data/python_client/
-3. kubectl apply -f py_client-pod.yml
-4. kubectl get pods -o wide --show-labels
-5. kubectl delete pod py-client
-6. kubectl logs py-client
+3. kubectl apply -f armando_py_client-pod.yml
 
+[validate]
+1. vagrant ssh machine1
+2. kubectl logs py-client
 
 === PART 2 ===
+[teardown replication controller]
+1. vagrant ssh machine1
+2. kubectl delete rc njsapp-rc
+
 [create deployment]
 1. vagrant ssh machine1
 2. cd /vagrant_data/nodejs/
-3. kubectl apply -f njsapp-dep.yml
+3. kubectl apply -f armando_njsapp-dep.yml
 
 [edit njsapp]
 1. vagrant ssh machine2
-2. cd /vagrant_data/nodejs/njsapp/healthy/
+2. cd /vagrant_data/nodejs/njsapp/
 3. vi app.js
 4. On line 11, replace "You've hit " with "You've punched "
 5. Save changes.
 
 [create new njsapp image]
 1. vagrant ssh machine2
-2. cd /vagrant_data/nodejs/njsapp/healthy/
-3. sudo docker build -t njsapp .
-4. sudo docker tag njsapp 192.168.33.10:5000/njsapp:v2
-5. sudo docker push 192.168.33.10:5000/njsapp:v2
+2. cd /vagrant_data/nodejs/njsapp/
+3. ./build_njsappv2.sh
 
 [modify service file and redeploy]
 1. vagrant ssh machine1
 2. cd /vagrant_data/nodejs/
-3. vi njsapp-dep.yml
+3. vi armando_njsapp-dep.yml
 4. Edit line 19, append ':v2' at end so it reads: 'image: 192.168.33.10:5000/njsapp:v2'
-5. kubectl apply -f njsapp-dep.yml
+5. kubectl apply -f armando_njsapp-dep.yml
 
 [validate that update has occured]
 1. vagrant ssh machine1
 2. kubectl logs py-client
+
+[cleanup]
+1. kubectl delete service njsapp-svc
+2. kubectl delete pod py-client
