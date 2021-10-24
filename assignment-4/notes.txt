@@ -1,7 +1,8 @@
 === INITIALIZATION ===
 [initialize vagrant machines, run commands from assignment-4 directory]
-1. follow steps outlined in k8s_installation_instructions.txt
-2. ./copy_files.sh
+1. vagrant up
+2. follow steps outlined in k8s_installation_instructions.txt
+3. ./copy_files.sh (from host machine)
 
 [set up local registry on all 3 machines]
 ***MACHINE1***
@@ -15,14 +16,14 @@
 1. vagrant ssh machine2
 2. sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 3. edit /etc/docker/daemon.json, adding this inside the { } (you’ll need a comma on the current last entry)
-"insecure-registries":["192.168.33.11:5000"]
+"insecure-registries":["192.168.33.10:5000"]
 4. sudo service docker restart
 
 ***MACHINE3***
 1. vagrant ssh machine3
 2. sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 3. edit /etc/docker/daemon.json, adding this inside the { } (you’ll need a comma on the current last entry)
-"insecure-registries":["192.168.33.12:5000"]
+"insecure-registries":["192.168.33.10:5000"]
 4. sudo service docker restart
 
 === PART 1 ===

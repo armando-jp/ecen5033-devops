@@ -1,6 +1,6 @@
 
 1. Use the Vagrant file exactly as I provide, and do vagrant up.  You can increase memory and CPU, but do not decrease.  
-2. (from host OS), copy part1.sh and part2_master.sh into machine1_data
+2. (from host OS), copy part1.sh and part2_master.sh into machine1_data, and kube-flannel.yml
 3. ssh into machine1
 4. (if you're not already there) cd /home/vagrant 
 5. cp /vagrant_data/* . 
@@ -20,9 +20,9 @@ Note what was printed out, there should be a command that looks like.
 kubeadm join 192.168.33.10:6443 --token fmjd4k.35gh8kccpx47mliz \
         --discovery-token-ca-cert-hash sha256:34a59dfa77699192fab12e19d38cb7233f786819192d5fe9b57399ded1c47c26
 
-*** MINE ***
-kubeadm join 192.168.33.10:6443 --token h55cyg.c77fqc1h3jafeank \
-        --discovery-token-ca-cert-hash sha256:e2df7931dc756ba658a4af203f98d9aa9bec09c942f3fdc8e40b8fa8ecb35f71
+*** MINE (YOURS WILL VARY) ***
+kubeadm join 192.168.33.10:6443 --token 5x5fl7.xtoc7msmf7ffc1fp \
+        --discovery-token-ca-cert-hash sha256:c1c2b381a0e9a9cbd4ba20d360dd00fae7f2a8cdc522d2abf853978e242a082a
 *** MINE ***
 
 Copy that command.
